@@ -92,10 +92,7 @@ namespace AlgorithmsDataStructures
                     node.next = node.next.next;
                     return true;
                 }
-                else
-                {
-                    node = node.next;
-                }
+                node = node.next;
             }
             return true; // если узел был удалён
         }
@@ -109,36 +106,28 @@ namespace AlgorithmsDataStructures
                 if (node == head && node == tail && node.value == _value)
                 {
                     head = null;
+                    tail = null;
                     return;
                 }
-                else if (node == head && head.value == _value)
+
+                else if (node == head && node.value == _value)
                 {
-                    head = head.next;
-                    node = node.next;
-                    continue;
+                    head = node.next;
                 }
+
                 else if (node.next == tail && node.next.value == _value)
                 {
-                    tail = node;
                     node.next = null;
-                    node = node.next;
+                    tail = node;
                     continue;
                 }
-                else if (node.next == null && node.value != _value)
-                {
-                    Console.WriteLine("Удаление не будет выполнено. Узла с таким значением нет.");
-                    break;
-                }
-                else if (node.next.value == _value)
+
+                else if (node.next != null && node.next.value == _value)
                 {
                     node.next = node.next.next;
-                    node = node.next;
                     continue;
                 }
-                else
-                {
-                    node = node.next;
-                }
+                node = node.next;
             }
         }
 
@@ -169,46 +158,48 @@ namespace AlgorithmsDataStructures
         {
             // здесь будет ваш код вставки узла после заданного
             Node node = head;
+
             while (node != null)
             {
-                if (node == head && node.next == null && node == _nodeAfter)
+                if (_nodeAfter == null)
                 {
-                    head.next = _nodeToInsert;
-                    _nodeToInsert.next = null;
+                    _nodeToInsert.next = node;
+                    head = _nodeToInsert;
                     return;
                 }
-                else if (node == head && head == _nodeAfter)
-                {
-                    head.next = _nodeToInsert;
-                    _nodeToInsert.next = tail;
-                    return;
-                }
-                else if (node == tail && tail == _nodeAfter)
+
+                else if (node == head && node == tail && node == _nodeAfter)
                 {
                     node.next = _nodeToInsert;
-                    _nodeToInsert.next = null;
+                    tail = _nodeToInsert;
                     return;
                 }
-                else if (node.next == null && node != _nodeAfter)
-                {
-                    Console.WriteLine("Вставка не будет выполнена. Узла такого нет.");
-                    break;
-                }
-                else if (node.next == _nodeAfter)
+
+                else if (node.next == tail && node.next == _nodeAfter)
                 {
                     node.next.next = _nodeToInsert;
-                    _nodeToInsert.next = node.next.next.next;
+                    tail = _nodeToInsert;
                     return;
                 }
-                else
+
+                else if (node == _nodeAfter)
                 {
-                    node = node.next;
+                    _nodeToInsert.next = node.next;
+                    node.next = _nodeToInsert;
+                    return;
                 }
+                node = node.next;
+            }
+
+            if (_nodeAfter == null)
+            {
+                _nodeToInsert.next = node;
+                head = _nodeToInsert;
+                return;
             }
             return;
             // если _nodeAfter = null , 
             // добавьте новый элемент первым в списке 
         }
-
     }
 }
