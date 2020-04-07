@@ -69,6 +69,7 @@ namespace AlgorithmsDataStructures
                 if (node == head && node == tail && node.value == _value)
                 {
                     head = null;
+                    tail = null;
                     return true;
                 }
                 else if (node == head && head.value == _value)
@@ -113,6 +114,7 @@ namespace AlgorithmsDataStructures
                 else if (node == head && node.value == _value)
                 {
                     head = node.next;
+                    continue;
                 }
 
                 else if (node.next == tail && node.next.value == _value)
@@ -138,6 +140,7 @@ namespace AlgorithmsDataStructures
             while (node != null)
             {
                 head = null;
+                tail = null;
                 node = node.next;
             }
         }
@@ -158,7 +161,6 @@ namespace AlgorithmsDataStructures
         {
             // здесь будет ваш код вставки узла после заданного
             Node node = head;
-
             while (node != null)
             {
                 if (_nodeAfter == null)
@@ -190,11 +192,10 @@ namespace AlgorithmsDataStructures
                 }
                 node = node.next;
             }
-
             if (_nodeAfter == null)
             {
-                _nodeToInsert.next = node;
                 head = _nodeToInsert;
+                tail = _nodeToInsert;
                 return;
             }
             return;
