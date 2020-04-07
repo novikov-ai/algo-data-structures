@@ -7,22 +7,20 @@ namespace AlgorithmsDataStructures
     [TestClass]
     public class LinkedListTests
     {
-        // создание узлов
         Node userNode0, userNode1, userNode2, userNode3, userNode4, userNode5, userNode6, userNode7, userNode8, userNode9, userNode10, userNode11, userNode12, userNode13, userNode14, userNode15;
 
-        // создание связанного списка с 10 элементами
         LinkedList userList;
-
-        // создание связанного списка с 1 элементом
         LinkedList userListOne;
-
-        // создание пустого связанного списка
         LinkedList userListEmpty;
+
+        Node userListHeadBefore, userListTailBefore;
+        Node userListOneHeadBefore, userListOneTailBefore;
+        Node userListEmptyHeadBefore, userListEmptyTailBefore;
 
         [TestInitialize]
         public void TestInitialize()
         {
-            // инициализация узлов значениями
+            // nodes initializing
             userNode0 = new Node(42);
 
             userNode1 = new Node(13);
@@ -42,7 +40,7 @@ namespace AlgorithmsDataStructures
             userNode14 = new Node(84);
             userNode15 = new Node(11);
 
-            // добавление узлов в список с 10 элементами
+            // userList with 10 nodes creating
             userList = new LinkedList();
             userList.AddInTail(userNode1);
             userList.AddInTail(userNode2);
@@ -55,232 +53,215 @@ namespace AlgorithmsDataStructures
             userList.AddInTail(userNode9);
             userList.AddInTail(userNode10);
 
-            // добавление узла в список из 1 элемента
+            // userListOne with 1 node creating
             userListOne = new LinkedList();
             userListOne.AddInTail(userNode0);
 
-            // создание пустого списка
+            // userListEmpty with no nodes creating
             userListEmpty = new LinkedList();
+
+            // finding the heads and tails of created LinkedLists
+            userListHeadBefore = userList.head;
+            userListTailBefore = userList.tail;
+
+            userListOneHeadBefore = userListOne.head;
+            userListOneTailBefore = userListOne.tail;
+
+            userListEmptyHeadBefore = userListEmpty.head;
+            userListEmptyTailBefore = userListEmpty.tail;
+
+            // checking the heads and tails of created LinkedLists
+            Assert.AreEqual(userNode1, userListHeadBefore);
+            Assert.AreEqual(userNode10, userListTailBefore);
+
+            Assert.AreEqual(userNode0, userListOneHeadBefore);
+            Assert.AreEqual(userNode0, userListOneTailBefore);
+
+            Assert.AreEqual(null, userListEmptyHeadBefore);
+            Assert.AreEqual(null, userListEmptyTailBefore);
         }
+
         [TestMethod]
         public void CountElementsInList()
         {
-            // arrange
-            int userListExpected = 10;
-            int userListExpectedOne = 1;
-            int userListExpectedEmpty = 0;
-
-            // act
-            int actual = userList.Count();
-            int actualOne = userListOne.Count();
-            int actualEmpty = userListEmpty.Count();
-
             // assert
-            Assert.AreEqual(userListExpected, actual);
-            Assert.AreEqual(userListExpectedOne, actualOne);
-            Assert.AreEqual(userListExpectedEmpty, actualEmpty);
+            Assert.AreEqual(10, userList.Count());
+            Assert.AreEqual(1, userListOne.Count());
+            Assert.AreEqual(0, userListEmpty.Count());
         }
 
         [TestMethod]
         public void ClearElementsInList()
         {
-            // arrange
-            int userListExpected = 0;
-            int userListExpectedOne = 0;
-            int userListExpectedEmpty = 0;
-
             // act
             userList.Clear();
             userListOne.Clear();
             userListEmpty.Clear();
 
-            int actual = userList.Count();
-            int actualOne = userListOne.Count();
-            int actualEmpty = userListEmpty.Count();
+            // assert after
+            Assert.AreEqual(null, userList.head);
+            Assert.AreEqual(null, userList.tail);
 
-            // assert
-            Assert.AreEqual(userListExpected, actual);
-            Assert.AreEqual(userListExpectedOne, actualOne);
-            Assert.AreEqual(userListExpectedEmpty, actualEmpty);
+            Assert.AreEqual(null, userListOne.head);
+            Assert.AreEqual(null, userListOne.tail);
+
+            Assert.AreEqual(null, userListEmpty.head);
+            Assert.AreEqual(null, userListEmpty.tail);
+
         }
 
         [TestMethod]
         public void RemoveElementInListByValue()
         {
-            // arrange
+            // 10 nodes
+            userList.Remove(30);
+            Assert.AreEqual(userNode1, userList.head);
+            Assert.AreEqual(userNode10, userList.tail);
+            Assert.AreEqual(10, userList.Count());
+            Assert.AreEqual(userNode2, userList.head.next);
+            Assert.AreEqual(null, userList.tail.next);
 
-            // список с 10 элементами
-            int userListExpected = 10;
-            int userListExpectedV = 9;
+            userList.Remove(7);
+            Assert.AreEqual(userNode1, userList.head);
+            Assert.AreEqual(userNode10, userList.tail);
+            Assert.AreEqual(9, userList.Count());
+            Assert.AreEqual(userNode3, userList.head.next);
+            Assert.AreEqual(null, userList.tail.next);
 
-            // список с 1 элементом
-            int userListExpectedOne = 1;
-            int userListExpectedOneV = 0;
+            // 1 node
+            userListOne.Remove(2);
+            Assert.AreEqual(userNode0, userListOne.head);
+            Assert.AreEqual(userNode0, userListOne.tail);
+            Assert.AreEqual(1, userListOne.Count());
+            Assert.AreEqual(null, userListOne.head.next);
+            Assert.AreEqual(null, userListOne.tail.next);
 
-            // пустой список
-            int userListExpectedEmpty = 0;
-
-            // act + assert
-
-            // список с 10 элементами
-            userList.Remove(30); //значения нет в списке
-            int actual = userList.Count();
-            Assert.AreEqual(userListExpected, actual);
-
-            userList.Remove(7); //значение есть в списке
-            actual = userList.Count();
-            Assert.AreEqual(userListExpectedV, actual);
-
-            // список с 1 элементом
-            userListOne.Remove(2); //значения нет в списке
-            int actualOne = userListOne.Count();
-            Assert.AreEqual(userListExpectedOne, actualOne);
-
-            userListOne.Remove(42); //значение есть в списке
-            actualOne = userListOne.Count();
-            Assert.AreEqual(userListExpectedOneV, actualOne);
-
-            // пустой список
+            userListOne.Remove(42);
+            Assert.AreEqual(null, userListOne.head);
+            Assert.AreEqual(null, userListOne.tail);
+            Assert.AreEqual(0, userListOne.Count());
+            
+            // no nodes
             userListEmpty.Remove(1);
-            int actualEmpty = userListEmpty.Count();
-            Assert.AreEqual(userListExpectedEmpty, actualEmpty);
+            Assert.AreEqual(null, userListEmpty.head);
+            Assert.AreEqual(null, userListEmpty.tail);
+            Assert.AreEqual(0, userListEmpty.Count());
         }
 
         [TestMethod]
         public void RemoveAllElementsInListByValue()
         {
-            // arrange
+            // 10 nodes
+            userList.RemoveAll(30);
+            Assert.AreEqual(userNode1, userList.head);
+            Assert.AreEqual(userNode10, userList.tail);
+            Assert.AreEqual(10, userList.Count());
+            Assert.AreEqual(userNode2, userList.head.next);
+            Assert.AreEqual(null, userList.tail.next);
 
-            // список с 10 элементами
-            int userListExpected = 10;
-            int userListExpectedV = 6;
+            userList.RemoveAll(7);
+            Assert.AreEqual(userNode1, userList.head);
+            Assert.AreEqual(userNode7, userList.tail);
+            Assert.AreEqual(6, userList.Count());
+            Assert.AreEqual(userNode3, userList.head.next);
+            Assert.AreEqual(null, userList.tail.next);
 
-            // список с 1 элементом
-            int userListExpectedOne = 1;
-            int userListExpectedOneV = 0;
+            // 1 node
+            userListOne.RemoveAll(2);
+            Assert.AreEqual(userNode0, userListOne.head);
+            Assert.AreEqual(userNode0, userListOne.tail);
+            Assert.AreEqual(1, userListOne.Count());
+            Assert.AreEqual(null, userListOne.head.next);
+            Assert.AreEqual(null, userListOne.tail.next);
 
-            // пустой список
-            int userListExpectedEmpty = 0;
+            userListOne.RemoveAll(42);
+            Assert.AreEqual(null, userListOne.head);
+            Assert.AreEqual(null, userListOne.tail);
+            Assert.AreEqual(0, userListOne.Count());
 
-            // act + assert
-
-            // список с 10 элементами
-            userList.RemoveAll(30); //значения нет в списке
-            int actual = userList.Count();
-            Assert.AreEqual(userListExpected, actual);
-
-            userList.RemoveAll(7); //значение есть в списке
-            actual = userList.Count();
-            Assert.AreEqual(userListExpectedV, actual);
-
-            // список с 1 элементом
-            userListOne.RemoveAll(2); //значения нет в списке
-            int actualOne = userListOne.Count();
-            Assert.AreEqual(userListExpectedOne, actualOne);
-
-            userListOne.RemoveAll(42); //значение есть в списке
-            actualOne = userListOne.Count();
-            Assert.AreEqual(userListExpectedOneV, actualOne);
-
-            // пустой список
+            // no nodes
             userListEmpty.RemoveAll(1);
-            int actualEmpty = userListEmpty.Count();
-            Assert.AreEqual(userListExpectedEmpty, actualEmpty);
+            Assert.AreEqual(null, userListEmpty.head);
+            Assert.AreEqual(null, userListEmpty.tail);
+            Assert.AreEqual(0, userListEmpty.Count());
         }
 
         [TestMethod]
         public void FindAllElementsInListByValue()
         {
-            // arrange
+            // 10 nodes
+            Assert.AreEqual(0, userList.FindAll(30).Count);
 
-            // список с 10 элементами
-            int userListExpected = 0;
-            int userListExpectedV = 4;
+            Assert.AreEqual(4, userList.FindAll(7).Count);
 
-            // список с 1 элементом
-            int userListExpectedOne = 0;
-            int userListExpectedOneV = 1;
+            // 1 node
+            Assert.AreEqual(0, userListOne.FindAll(2).Count);
 
-            // пустой список
-            int userListExpectedEmpty = 0;
+            Assert.AreEqual(1, userListOne.FindAll(42).Count);
 
-            // act + assert
-
-            // список с 10 элементами
-            int actual = userList.FindAll(30).Count; //значения нет в списке
-            Assert.AreEqual(userListExpected, actual);
-
-            actual = userList.FindAll(7).Count; //значение есть в списке
-            Assert.AreEqual(userListExpectedV, actual);
-
-            // список с 1 элементом
-            int actualOne = userListOne.FindAll(2).Count; //значения нет в списке
-            Assert.AreEqual(userListExpectedOne, actualOne);
-
-            actualOne = userListOne.FindAll(42).Count; //значение есть в списке
-            Assert.AreEqual(userListExpectedOneV, actualOne);
-
-            // пустой список
-            int actualEmpty = userListEmpty.FindAll(1).Count;
-            Assert.AreEqual(userListExpectedEmpty, actualEmpty);
+            // no nodes
+            Assert.AreEqual(0, userListEmpty.FindAll(1).Count);
         }
 
         [TestMethod]
         public void InsertAfterNodeByValue()
         {
-            // arrange
+            // 10 nodes
+            userList.InsertAfter(userNode0, userNode11); 
+            Assert.AreEqual(10, userList.Count());
+            Assert.AreEqual(userNode1, userList.head);
+            Assert.AreEqual(userNode10, userList.tail);
+            Assert.AreEqual(userNode2, userList.head.next);
+            Assert.AreEqual(null, userList.tail.next);
 
-            // список с 10 элементами
-            int userListExpected = 10;
-            int userListExpectedV = 11;
-            int userListExpectedVH = 12;
-            int userListExpectedVT = 13;
+            userList.InsertAfter(userNode6, userNode11); 
+            Assert.AreEqual(11, userList.Count());
+            Assert.AreEqual(userNode1, userList.head);
+            Assert.AreEqual(userNode10, userList.tail);
+            Assert.AreEqual(userNode2, userList.head.next);
+            Assert.AreEqual(null, userList.tail.next);
 
-            // список с 1 элементом
-            int userListExpectedOne = 1;
-            int userListExpectedOneV = 2;
+            userList.InsertAfter(userNode1, userNode12); 
+            Assert.AreEqual(12, userList.Count());
+            Assert.AreEqual(userNode1, userList.head);
+            Assert.AreEqual(userNode10, userList.tail);
+            Assert.AreEqual(userNode12, userList.head.next);
+            Assert.AreEqual(null, userList.tail.next);
 
-            // пустой список
-            int userListExpectedEmpty = 0;
-            int userListExpectedEmptyV = 1;
+            userList.InsertAfter(userNode10, userNode13); 
+            Assert.AreEqual(13, userList.Count());
+            Assert.AreEqual(userNode1, userList.head);
+            Assert.AreEqual(userNode13, userList.tail);
+            Assert.AreEqual(userNode12, userList.head.next);
+            Assert.AreEqual(null, userList.tail.next);
 
-            // act + assert
+            // 1 node
+            userListOne.InsertAfter(userNode3, userNode14); 
+            Assert.AreEqual(1, userListOne.Count());
+            Assert.AreEqual(userNode0, userListOne.head);
+            Assert.AreEqual(userNode0, userListOne.tail);
+            Assert.AreEqual(null, userListOne.head.next);
+            Assert.AreEqual(null, userListOne.tail.next);
 
-            // список с 10 элементами
-            userList.InsertAfter(userNode0, userNode11);  //значения нет в списке
-            int actual = userList.Count();
-            Assert.AreEqual(userListExpected, actual);
+            userListOne.InsertAfter(userNode0, userNode14); 
+            Assert.AreEqual(2, userListOne.Count());
+            Assert.AreEqual(userNode0, userListOne.head);
+            Assert.AreEqual(userNode14, userListOne.tail);
+            Assert.AreEqual(userNode14, userListOne.head.next);
+            Assert.AreEqual(null, userListOne.tail.next);
 
-            userList.InsertAfter(userNode6, userNode11); //значение есть в списке (вставка в середину)
-            actual = userList.Count();
-            Assert.AreEqual(userListExpectedV, actual);
-
-            userList.InsertAfter(userNode1, userNode12); //значение есть в списке (вставка в начало)
-            actual = userList.Count();
-            Assert.AreEqual(userListExpectedVH, actual);
-
-            userList.InsertAfter(userNode10, userNode13); //значение есть в списке (вставка в конец)
-            actual = userList.Count();
-            Assert.AreEqual(userListExpectedVT, actual);
-
-            // список с 1 элементом
-            userListOne.InsertAfter(userNode3, userNode14); //значения нет в списке
-            int actualOne = userListOne.Count();
-            Assert.AreEqual(userListExpectedOne, actualOne);
-
-            userListOne.InsertAfter(userNode0, userNode14); //значение есть в списке
-            actualOne = userListOne.Count();
-            Assert.AreEqual(userListExpectedOneV, actualOne);
-
-            // пустой список
+            // no nodes
             userListEmpty.InsertAfter(userNode10, userNode15);
-            int actualEmpty = userListEmpty.Count();
-            Assert.AreEqual(userListExpectedEmpty, actualEmpty);
+            Assert.AreEqual(0, userListEmpty.Count());
+            Assert.AreEqual(null, userListEmpty.head);
+            Assert.AreEqual(null, userListEmpty.tail);
 
-            userListEmpty.InsertAfter(null, userNode15); // при подаче null вставка в начало
-            actualEmpty = userListEmpty.Count();
-            Assert.AreEqual(userListExpectedEmptyV, actualEmpty);
+            userListEmpty.InsertAfter(null, userNode15); 
+            Assert.AreEqual(1, userListEmpty.Count());
+            Assert.AreEqual(userNode15, userListEmpty.head);
+            Assert.AreEqual(userNode15, userListEmpty.tail);
+            Assert.AreEqual(null, userListEmpty.head.next);
+            Assert.AreEqual(null, userListEmpty.tail.next);
         }
     }
 }
-
