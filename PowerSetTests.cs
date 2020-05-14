@@ -171,8 +171,10 @@ namespace AlgorithmsDataStructures
             Assert.AreEqual(true, testPowerSet.Get(5));
             Assert.AreEqual(false, testPowerSet.Get(12));
 
-            // Difference with empty set
-            Assert.AreEqual(0, testPowerSet1.Difference(testPowerSet0).capacity);
+            // Difference with empty set (A / 0 = A)
+            Assert.AreEqual(5, testPowerSet1.Difference(testPowerSet0).capacity);
+
+            // Difference with empty set (0 / A = 0)
             Assert.AreEqual(0, testPowerSet0.Difference(testPowerSet1).capacity);
         }
 
@@ -183,9 +185,14 @@ namespace AlgorithmsDataStructures
             Assert.AreEqual(false, testPowerSet1.IsSubset(testPowerSet2));
             Assert.AreEqual(false, testPowerSet2.IsSubset(testPowerSet1));
 
-            // IsSubSet with empty set (expected false)
+            // IsSubSet with empty set (0 isSubset(A) = false)
             Assert.AreEqual(false, testPowerSet0.IsSubset(testPowerSet1));
-            Assert.AreEqual(false, testPowerSet1.IsSubset(testPowerSet0));
+
+            // IsSubSet with empty set (A isSubset(0) = true)
+            Assert.AreEqual(true, testPowerSet1.IsSubset(testPowerSet0));
+
+            // empty set with empty set (0 isSubset(0) = true)
+            Assert.AreEqual(true, testPowerSet0.IsSubset(testPowerSet0));
 
             // Putting 3 items to the empty set
             testPowerSet0.Put(10);
