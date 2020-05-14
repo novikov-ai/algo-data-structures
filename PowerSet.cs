@@ -75,14 +75,14 @@ namespace AlgorithmsDataStructures
         {
             // объединение текущего множества и set2
             PowerSet<T> United = new PowerSet<T>();
-            if (capacity != 0)
+            if (capacity > 0)
             {
                 foreach (var item in slots)
                 {
                     United.Put(item);
                 }
             }
-            if (set2.capacity != 0)
+            if (set2.capacity > 0)
             {
                 foreach (var item in set2.slots)
                 {
@@ -96,14 +96,15 @@ namespace AlgorithmsDataStructures
         {
             // разница текущего множества и set2
             PowerSet<T> Differed = new PowerSet<T>();
-            if (capacity > 0 && set2.capacity > 0)
+            if (capacity > 0)
             {
                 foreach (T item in slots)
                 {
-                    if (!set2.Get(item))
-                    {
-                        Differed.Put(item);
-                    }
+                    Differed.Put(item);
+                }
+                foreach (T item in set2.slots)
+                {
+                    Differed.Remove(item);
                 }
             }
             return Differed;
@@ -115,7 +116,7 @@ namespace AlgorithmsDataStructures
             // подмножество текущего множества,
             // иначе false
             int count = 0;
-            if (capacity > set2.capacity && set2.capacity > 0)
+            if (capacity >= set2.capacity)
             {
                 foreach (T item in slots)
                 {
