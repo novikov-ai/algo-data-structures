@@ -7,17 +7,13 @@ namespace AlgorithmsDataStructures
     public class BloomFilter
     {
         public int filter_len;
-        int[] BitArray;
+        int filter;
 
         public BloomFilter(int f_len)
         {
             filter_len = f_len;
             // создаём битовый массив длиной f_len ...
-            BitArray = new int[filter_len];
-            for (int i = 0; i < filter_len; i++)
-            {
-                BitArray[i] = 0;
-            }
+            filter = 0;
         }
 
         // хэш-функции
@@ -31,7 +27,8 @@ namespace AlgorithmsDataStructures
                 int code = (int)str1[i];
                 result = Math.Abs(result * 17 + code) % filter_len;
             }
-            return result;
+            return 1 << result;
+
         }
         public int Hash2(string str1)
         {
@@ -43,21 +40,24 @@ namespace AlgorithmsDataStructures
                 int code = (int)str1[i];
                 result = Math.Abs(result * 223 + code) % filter_len;
             }
-            return result;
+            return 1 << result;
         }
 
         public void Add(string str1)
         {
             // добавляем строку str1 в фильтр
-            BitArray[Hash1(str1)] = 1;
-            BitArray[Hash2(str1)] = 1;
+            filter |= Hash1(str1);
+            filter |= Hash2(str1);
         }
 
         public bool IsValue(string str1)
         {
             // проверка, имеется ли строка str1 в фильтре
-            if (BitArray[Hash1(str1)] == 1 && BitArray[Hash2(str1)] == 1)
-            { return true; }
+            int result = Hash1(str1) + Hash2(str1);
+            if ((filter & result) == result)
+            {
+                return true;
+            }
             return false;
         }
     }
