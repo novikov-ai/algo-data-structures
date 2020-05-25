@@ -88,7 +88,7 @@ namespace AlgorithmsDataStructures
             {
                 return values[HashFun(key)];
             }
-            return default;
+            return default(T);
         }
     }
 }
