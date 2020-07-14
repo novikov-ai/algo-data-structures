@@ -41,12 +41,17 @@ namespace AlgorithmsDataStructures2
         {
             // ваш код удаления существующего узла NodeToDelete
             SimpleTreeNode<T> ParentRemChild;
-            for (int i = 0; i < GetChildren(Root).Count; i++)
+            List<SimpleTreeNode<T>> RootChildren = GetChildren(Root);
+            foreach (SimpleTreeNode<T> node in RootChildren)
             {
-                if (GetChildren(Root)[i] == NodeToDelete)
+                if (node == NodeToDelete)
                 {
-                    ParentRemChild = GetChildren(Root)[i].Parent;
-                    ParentRemChild.Children.Remove(NodeToDelete);
+                    ParentRemChild = node.Parent;
+                    ParentRemChild.Children.Remove(node);
+                    if (ParentRemChild.Children.Count == 0)
+                    {
+                        ParentRemChild.Children = null;
+                    }
                     return;
                 }
             }
@@ -105,6 +110,10 @@ namespace AlgorithmsDataStructures2
                         node.Parent = NewParent;
                         AddChild(NewParent, node);
                         OldParent.Children.Remove(node);
+                        if (OldParent.Children.Count == 0)
+                        {
+                            OldParent.Children = null;
+                        }
                         return;
                     }
                 }
