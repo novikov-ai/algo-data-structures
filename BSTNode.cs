@@ -149,66 +149,144 @@ namespace AlgorithmsDataStructures2
             BSTNode<T> Node = foundNode.Node;
             BSTNode<T> successorNode;
 
-            if (Root == Node && GetAllNodes(Root).Count == 1) // CASE 1 (only root)
-                Root = null;
 
             if (foundNode.NodeHasKey == true)
             {
-                if (Node.LeftChild != null && Node.RightChild != null) // CASE 2 (2 children!)
+                if (Node.LeftChild != null && Node.RightChild != null) // CASE (node has R & L children)
                 {
-                    successorNode = FinMinMax(Node.RightChild, false); // searching for a successor
-
-                    if (successorNode.RightChild != null) // child of successor
+                    if (Node == Root)
                     {
-                        successorNode.Parent.LeftChild = successorNode.RightChild;
-                        successorNode.RightChild.Parent = successorNode.Parent;
+                        successorNode = FinMinMax(Node.RightChild, false); // searching for a successor
+                        if (GetAllNodes(successorNode).Count == 1) // if successor have 0 children
+                        {
+                            Node.RightChild.Parent = null;
+                            Node.LeftChild.Parent = successorNode;
+                            successorNode.LeftChild = Node.LeftChild;
+                            Root = Node.RightChild;
+                        }
+                        else
+                        {
+                            if (successorNode != Node.RightChild)
+                            {
+                                successorNode.Parent.LeftChild = null;
+                                successorNode.Parent = null;
+
+                                Root.LeftChild.Parent = successorNode;
+                                successorNode.LeftChild = Root.LeftChild;
+
+                                Root.RightChild.Parent = successorNode;
+                                successorNode.RightChild = Root.RightChild;
+                                Root = successorNode;
+                            }
+                            else
+                            {
+                                Root.LeftChild.Parent = successorNode;
+                                successorNode.LeftChild = Root.LeftChild;
+
+                                Root.RightChild.Parent = null;
+                                Root = successorNode;
+                            }
+                        }
                     }
-
-                    successorNode.Parent = Node.Parent;
-                    if (Node.Parent.LeftChild == Node)
-                        Node.Parent.LeftChild = successorNode;
-                    if (Node.Parent.RightChild == Node)
-                        Node.Parent.RightChild = successorNode;
-
-                    Node.LeftChild.Parent = successorNode;
-                    successorNode.LeftChild = Node.LeftChild;
-                }
-
-                else
-                {
-                    if (Node.LeftChild != null || Node.RightChild != null) // CASE 3 (1 child)
+                    else
                     {
-                        if (Node.LeftChild != null)
+                        successorNode = FinMinMax(Node.RightChild, false); // searching for a successor
+
+                        if (successorNode != Node.RightChild)
+                        {
+                            successorNode.Parent.LeftChild = null;
+                            successorNode.Parent = Node.Parent;
+
+                            if (Node.Parent.LeftChild == Node)
+                            {
+                                Node.Parent.LeftChild = successorNode;
+                            }
+                            else
+                                Node.Parent.RightChild = successorNode;
+
+                            if (Node.LeftChild != null)
+                            {
+                                Node.LeftChild.Parent = successorNode;
+                                successorNode.LeftChild = Node.LeftChild;
+                            }
+                            if (Node.RightChild != null)
+                            {
+                                Node.RightChild.Parent = successorNode;
+                                successorNode.RightChild = Node.RightChild;
+                            }
+                        }
+                        else
+                        {
+                            successorNode.Parent = Node.Parent;
+
+                            if (Node.Parent.LeftChild == Node)
+                            {
+                                Node.Parent.LeftChild = successorNode;
+                            }
+                            else
+                                Node.Parent.RightChild = successorNode;
+
+                            successorNode.LeftChild = Node.LeftChild;
+                            Node.LeftChild.Parent = successorNode;
+                        }
+                    }
+                }
+                else // CASE (node has R/L || 0 children)
+                {
+                    if (Node == Root)
+                    {
+                        if (GetAllNodes(Root).Count == 1) // CASE (node = root && has 0 children)
+                            Root = null;
+                        else // CASE (node = root && has 1 child)
+                        {
+                            if (Node.LeftChild != null)
+                            {
+                                Node.LeftChild.Parent = null;
+                                Root = Node.LeftChild;
+                            }
+                            else
+                            {
+                                Node.RightChild.Parent = null;
+                                Root = Node.RightChild;
+                            }
+                        }
+                    }
+                    else // CASE (node has 1 child)
+                    {
+                        if (Node.LeftChild == null && Node.RightChild == null)
+                        {
+                            if (Node.Parent.LeftChild == Node)
+                                Node.Parent.LeftChild = null;
+                            else
+                                Node.Parent.RightChild = null;
+                            Node.Parent = null;
+                        }
+
+                        else if (Node.LeftChild != null)
                         {
                             Node.LeftChild.Parent = Node.Parent;
+
                             if (Node.Parent.LeftChild == Node)
                                 Node.Parent.LeftChild = Node.LeftChild;
-                            if (Node.Parent.RightChild == Node)
-                                Node.Parent.RightChild = Node.LeftChild;
+                            else
+                                Node.Parent.RightChild = Node.RightChild;
                         }
                         else
                         {
                             Node.RightChild.Parent = Node.Parent;
+
                             if (Node.Parent.LeftChild == Node)
-                                Node.Parent.LeftChild = Node.RightChild;
-                            if (Node.Parent.RightChild == Node)
+                                Node.Parent.LeftChild = Node.LeftChild;
+                            else
                                 Node.Parent.RightChild = Node.RightChild;
                         }
                     }
-
-                    else // CASE 4 (no children)
-                    {
-                        if (Node.Parent.LeftChild != null && Node.Parent.LeftChild == Node)
-                            Node.Parent.LeftChild = null;
-                        if (Node.Parent.RightChild != null && Node.Parent.RightChild == Node)
-                            Node.Parent.RightChild = null;
-                        Node.Parent = null;
-                    }
                 }
+
                 return true;
             }
             else
-                return false; // если узел не найден
+                return false;
         }
 
         public int Count()
