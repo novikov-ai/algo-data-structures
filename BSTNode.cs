@@ -53,6 +53,7 @@ namespace AlgorithmsDataStructures2
             BSTNode<T> selectedNode = Root;
             BSTFind<T> newSearch = new BSTFind<T>();
 
+
             while (newSearch.NodeHasKey == true || newSearch.NodeHasKey == false)
             {
                 if (key == selectedNode.NodeKey)
@@ -94,25 +95,31 @@ namespace AlgorithmsDataStructures2
         public bool AddKeyValue(int key, T val)
         {
             // добавляем ключ-значение в дерево
-            BSTFind<T> foundNode = FindNodeByKey(key);
-
-            if (foundNode.NodeHasKey == false)
+            if (Root == null)
             {
-                BSTNode<T> newNode = new BSTNode<T>(key, val, foundNode.Node);
-                if (foundNode.ToLeft == true)
-                {
-                    foundNode.Node.LeftChild = newNode;
-                    newNode.Parent = foundNode.Node;
-                }
-                else
-                {
-                    foundNode.Node.RightChild = newNode;
-                    newNode.Parent = foundNode.Node;
-                }
-                return true;
+                Root = new BSTNode<T>(key, val, null);
             }
             else
-                return false; // если ключ уже есть
+            {
+                BSTFind<T> foundNode = FindNodeByKey(key);
+                if (foundNode.NodeHasKey == false)
+                {
+                    BSTNode<T> newNode = new BSTNode<T>(key, val, foundNode.Node);
+                    if (foundNode.ToLeft == true)
+                    {
+                        foundNode.Node.LeftChild = newNode;
+                        newNode.Parent = foundNode.Node;
+                    }
+                    else
+                    {
+                        foundNode.Node.RightChild = newNode;
+                        newNode.Parent = foundNode.Node;
+                    }
+                }
+                else
+                    return false; // если ключ уже есть
+            }
+            return true;
         }
 
         public BSTNode<T> FinMinMax(BSTNode<T> FromNode, bool FindMax)
