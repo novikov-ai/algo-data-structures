@@ -127,21 +127,23 @@ namespace AlgorithmsDataStructures2
             // ищем максимальное/минимальное в поддереве
             BSTNode<T> selectedNode = FromNode;
 
-            if (selectedNode != null)
+            if (selectedNode != null && Root != null)
             {
-                if (FindMax == false)
+                if (FindNodeByKey(selectedNode.NodeKey).NodeHasKey)
                 {
-                    while (selectedNode.LeftChild != null)
+                    if (FindMax == false)
                     {
-                        selectedNode = selectedNode.LeftChild;
+                        while (selectedNode.LeftChild != null)
+                        {
+                            selectedNode = selectedNode.LeftChild;
+                        }
                     }
-                    return selectedNode;
-                }
-                else
-                {
-                    while (selectedNode.RightChild != null)
+                    else
                     {
-                        selectedNode = selectedNode.RightChild;
+                        while (selectedNode.RightChild != null)
+                        {
+                            selectedNode = selectedNode.RightChild;
+                        }
                     }
                     return selectedNode;
                 }
