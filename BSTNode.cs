@@ -320,5 +320,77 @@ namespace AlgorithmsDataStructures2
 
             return Nodes;
         }
+
+        public List<BSTNode<T>> WideAllNodes()
+        {
+            List<BSTNode<T>> WideList = new List<BSTNode<T>>();
+            Queue<BSTNode<T>> NodesQueue = new Queue<BSTNode<T>>();
+            BSTNode<T> Node = Root;
+            NodesQueue.Enqueue(Root);
+
+            if (Root != null)
+            {
+                while (NodesQueue.Count > 0)
+                {
+                    Node = NodesQueue.Dequeue();
+                    WideList.Add(Node);
+
+                    if (Node.LeftChild != null)
+                        NodesQueue.Enqueue(Node.LeftChild);
+                    if (Node.RightChild != null)
+                        NodesQueue.Enqueue(Node.RightChild);
+                }
+                return WideList;
+            }
+            return null;
+        }
+
+        public List<BSTNode<T>> DeepAllNodes(int Order)
+        {
+            List<BSTNode<T>> DeepList = new List<BSTNode<T>>();
+
+            if (Root != null)
+            {
+                switch (Order)
+                {
+                    case 0: // in-order
+                        {
+                            if (Root.LeftChild != null)
+                                DeepList.AddRange(GetAllNodes(Root.LeftChild));
+
+                            DeepList.Add(Root);
+
+                            if (Root.RightChild != null)
+                                DeepList.AddRange(GetAllNodes(Root.RightChild));
+
+                            break;
+                        }
+
+                    case 1: // post-order
+                        {
+                            if (Root.LeftChild != null)
+                                DeepList.AddRange(GetAllNodes(Root.LeftChild));
+
+                            if (Root.RightChild != null)
+                                DeepList.AddRange(GetAllNodes(Root.RightChild));
+
+                            DeepList.Add(Root);
+
+                            break;
+                        }
+
+                    case 2: // pre-order
+                        {
+                            DeepList.AddRange(GetAllNodes(Root));
+                            break;
+                        }
+
+                    default:
+                        return null;
+                }
+                return DeepList;
+            }
+            return null;
+        }
     }
 }
