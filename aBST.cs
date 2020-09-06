@@ -60,12 +60,13 @@ namespace AlgorithmsDataStructures2
                     capacity++;
                 }
 
-                if (res != null && res < 0)
+                else if (res != null && res < 0)
                 {
                     Tree[(int)res * (-1)] = key;
                     capacity++;
                     return (int)res * (-1);
                 }
+                
                 return (int)res;
             }
             else
