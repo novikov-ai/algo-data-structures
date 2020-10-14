@@ -5,61 +5,35 @@ namespace AlgorithmsDataStructures2
 {
     public static class BalancedBST
     {
+        public static int[] BBST;
         public static int[] GenerateBBSTArray(int[] a)
         {
-            if (a.Length > 0)
-            {
-                Array.Sort(a);
-                int[] BBSTArray = new int[a.Length];
+            Array.Sort(a);
 
-                List<int> TreeList = new List<int>();
-                Node node = new Node();
+            BBST = new int[a.Length];
+            Balancing(a, 0);
 
-                TreeList = node.GetList(a);
-
-                for (int i = 0; i < a.Length; i++)
-                {
-                    BBSTArray[i] = TreeList[i];
-                }
-
-                return BBSTArray;
-            }
-            return null;
+            return BBST;
         }
-    }
 
-    public class Node
-    {
-        public int[] left;
-        public int[] right;
-        public int count = 0;
-
-        public List<int> GetList(int[] a)
+        public static void Balancing(int[] array, int index)
         {
-            if (a.Length > 0)
-            {
-                List<int> TreeList = new List<int>();
-                Node node = new Node();
+            if (array.Length == 0)
+                return;
 
-                TreeList.Add(a[a.Length / 2]);
+            int center = array.Length / 2; // находим центральный индекс массива
 
-                if (a.Length > 1)
-                {
-                    node.left = new int[a.Length / 2];
-                    Array.ConstrainedCopy(a, 0, node.left, 0, node.left.Length);
-                    TreeList.AddRange(GetList(node.left));
+            if (index < BBST.Length)
+                BBST[index] = array[center];
 
-                    if (a.Length > 2)
-                    {
-                        node.right = new int[a.Length - node.left.Length - 1];
-                        Array.ConstrainedCopy(a, a.Length / 2 + 1, node.right, 0, node.right.Length);
-                        TreeList.AddRange(GetList(node.right));
-                    }
-                }
-                
-                return TreeList;
-            }
-            return null;
+            int[] left = new int[center]; // создаем массив из левой части за исключением центрального элемента
+            int[] right = new int[array.Length - left.Length - 1]; // создаем массив из правой части за исключением центрального элемента
+
+            Array.ConstrainedCopy(array, 0, left, 0, left.Length);
+            Array.ConstrainedCopy(array, center + 1, right, 0, right.Length);
+
+            Balancing(left, 2 * index + 1); // индекс левого наследника
+            Balancing(right, 2 * index + 2); // индекс правого наследника
         }
     }
 }
