@@ -163,5 +163,41 @@ namespace AlgorithmsDataStructures2
             }
             return Children;
         }
+
+        public List<SimpleTreeNode<T>> EvenTrees()
+        {
+            List<SimpleTreeNode<T>> EvenList = new List<SimpleTreeNode<T>>();
+
+            if (Root != null && Root.Children != null)
+            {
+                int even = 0; // количество наследников с нечетным кол-вом узлов (не считая самого наследника)
+                int odd = 1; // количество наследников с четным кол-вом узлов (+1 так как корень считается как 1 нечетный узел)
+                int count; // количество наследников у наследника корня (для определения четных или нечетных)
+
+                for (int i = 0; i < Root.Children.Count; i++)
+                {
+                    count = GetChildren(Root.Children[i]).Count;
+
+                    if (count % 2 == 0)
+                        odd++;
+                    else
+                        even++;
+                }
+
+                if (odd %2 == 0)
+                {
+                    List<SimpleTreeNode<T>> AllChildren = GetChildren(Root); // список всех узлов без корня
+                    foreach (SimpleTreeNode<T> item in AllChildren)
+                    {
+                        if (GetChildren(item).Count % 2 == 1 && item.Parent != null)
+                        {
+                            EvenList.Add(item.Parent);
+                            EvenList.Add(item);
+                        }
+                    }
+                }
+            }
+            return EvenList;
+        }
     }
 }
