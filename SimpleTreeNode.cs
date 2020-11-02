@@ -164,9 +164,9 @@ namespace AlgorithmsDataStructures2
             return Children;
         }
 
-        public List<SimpleTreeNode<T>> EvenTrees()
+        public List<T> EvenTrees()
         {
-            List<SimpleTreeNode<T>> EvenList = new List<SimpleTreeNode<T>>();
+            List<T> EvenList = new List<T>();
 
             if (Root != null && Root.Children != null)
             {
@@ -191,8 +191,8 @@ namespace AlgorithmsDataStructures2
                     {
                         if (GetChildren(item).Count % 2 == 1 && item.Parent != null)
                         {
-                            EvenList.Add(item.Parent);
-                            EvenList.Add(item);
+                            EvenList.Add(item.Parent.NodeValue);
+                            EvenList.Add(item.NodeValue);
                         }
                     }
                 }
