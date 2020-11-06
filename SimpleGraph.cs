@@ -12,6 +12,8 @@ namespace AlgorithmsDataStructures2
             Value = val;
             Hit = false;
         }
+
+        public Vertex<T> prev;
     }
 
     public class SimpleGraph<T>
@@ -168,6 +170,62 @@ namespace AlgorithmsDataStructures2
                         Select = null;
                 }
             }
+            return Path;
+        }
+
+        public List<Vertex<T>> BreadthFirstSearch(int VFrom, int VTo)
+        {
+            // узлы задаются позициями в списке vertex.
+            // возвращает список узлов -- путь из VFrom в VTo
+            // или пустой список, если пути нету
+
+            List<Vertex<T>> Path = new List<Vertex<T>>();
+            Queue<Vertex<T>> Result = new Queue<Vertex<T>>();
+
+            if (VFrom >= capacity || VTo >= capacity || VFrom < 0 || VTo < 0) // Обработка некорректного ввода
+                return Path;
+            if (VFrom == VTo) { Path.Add(vertex[VFrom]); return Path; }
+
+            foreach (Vertex<T> item in vertex)
+            {
+                if (item != null)
+                    item.Hit = false;
+            }
+
+            Vertex<T> Select = vertex[VFrom];
+
+            while (Select != null)
+            {
+                Select.Hit = true;
+                if (Select == vertex[VTo])
+                {
+                    do
+                    {
+                        Path.Add(Select);
+                        Select = Select.prev;
+                    } while (Select != vertex[VFrom]);
+
+                    Path.Add(vertex[VFrom]);
+                    Path.Reverse();
+
+                    return Path;
+                }
+
+                for (int i = 0; i < capacity; i++)
+                {
+                    if (vertex[i].Hit == false && IsEdge(Array.IndexOf(vertex, Select), i) == true)
+                    {
+                        Result.Enqueue(vertex[i]); // Добавляем все смежные в очередь
+                        vertex[i].prev = Select; // Добавляем ссылку на предыдущий узел
+                    }
+                }
+
+                if (Result.Count > 0)
+                    Select = Result.Dequeue(); // Берем из очереди смежную вершину
+                else
+                    Select = null;
+            }
+
             return Path;
         }
     }
