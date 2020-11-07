@@ -216,7 +216,9 @@ namespace AlgorithmsDataStructures2
                     if (vertex[i].Hit == false && IsEdge(Array.IndexOf(vertex, Select), i) == true)
                     {
                         Result.Enqueue(vertex[i]); // Добавляем все смежные в очередь
-                        vertex[i].prev = Select; // Добавляем ссылку на предыдущий узел
+
+                        if (vertex[i].prev == null)
+                            vertex[i].prev = Select; // Добавляем ссылку на предыдущий узел, если он не задан
                     }
                 }
 
