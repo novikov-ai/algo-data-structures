@@ -180,7 +180,7 @@ namespace AlgorithmsDataStructures2
             // или пустой список, если пути нету
 
             List<Vertex<T>> Path = new List<Vertex<T>>();
-            Queue<Vertex<T>> Result = new Queue<Vertex<T>>();
+            Queue<Vertex<T>> QueueVrtx = new Queue<Vertex<T>>();
 
             if (VFrom >= capacity || VTo >= capacity || VFrom < 0 || VTo < 0) // Обработка некорректного ввода
                 return Path;
@@ -189,7 +189,11 @@ namespace AlgorithmsDataStructures2
             foreach (Vertex<T> item in vertex)
             {
                 if (item != null)
+                {
                     item.Hit = false;
+                    item.prev = null;
+                }
+                    
             }
 
             Vertex<T> Select = vertex[VFrom];
@@ -197,6 +201,7 @@ namespace AlgorithmsDataStructures2
             while (Select != null)
             {
                 Select.Hit = true;
+
                 if (Select == vertex[VTo])
                 {
                     do
@@ -215,15 +220,15 @@ namespace AlgorithmsDataStructures2
                 {
                     if (vertex[i].Hit == false && IsEdge(Array.IndexOf(vertex, Select), i) == true)
                     {
-                        Result.Enqueue(vertex[i]); // Добавляем все смежные в очередь
+                        QueueVrtx.Enqueue(vertex[i]); // Добавляем все смежные в очередь
 
                         if (vertex[i].prev == null)
                             vertex[i].prev = Select; // Добавляем ссылку на предыдущий узел, если он не задан
                     }
                 }
 
-                if (Result.Count > 0)
-                    Select = Result.Dequeue(); // Берем из очереди смежную вершину
+                if (QueueVrtx.Count > 0)
+                    Select = QueueVrtx.Dequeue(); // Берем из очереди смежную вершину
                 else
                     Select = null;
             }
