@@ -14,6 +14,7 @@ namespace AlgorithmsDataStructures2
         }
 
         public Vertex<T> prev;
+        public List<Vertex<T>> adjacent;
     }
 
     public class SimpleGraph<T>
@@ -193,7 +194,7 @@ namespace AlgorithmsDataStructures2
                     item.Hit = false;
                     item.prev = null;
                 }
-                    
+
             }
 
             Vertex<T> Select = vertex[VFrom];
@@ -234,6 +235,57 @@ namespace AlgorithmsDataStructures2
             }
 
             return Path;
+        }
+
+        public List<Vertex<T>> WeakVertices()
+        {
+            // возвращает список узлов вне треугольников
+
+            List<Vertex<T>> WeakVertices = new List<Vertex<T>>();
+            List<Vertex<T>> AdjList = new List<Vertex<T>>();
+            int PowerVrtx;
+
+            for (int i = 0; i < capacity; i++) // заполняем свойство для каждой вершины "смежные вершины"
+            {
+                vertex[i].adjacent = null; // сперва зануляем список смежных вершин у данной
+                AdjList.Clear();
+
+                PowerVrtx = 0; // если параметр равен 2, то значит вершина неслабая
+
+                for (int j = 0; j < capacity; j++) // заполняем список смежными вершинами
+                {
+                    if (i != j && IsEdge(i, j) == true)
+                        AdjList.Add(vertex[j]);
+                }
+                vertex[i].adjacent = AdjList;
+
+                if (vertex[i].adjacent.Count < 2) // если количество смежных вершин менее 2, то данная вершина не входит в треугольник
+                {
+                    WeakVertices.Add(vertex[i]);
+                    continue;
+                }                    
+                else
+                    for (int j = 0; j < vertex[i].adjacent.Count; j++)
+                    {
+                        if (PowerVrtx >= 2)
+                            break;
+                        else
+                            for (int k = 0; k < vertex[i].adjacent.Count; k++)
+                            {
+                                if (PowerVrtx >= 2)
+                                    break;
+                                    
+                                else
+                                    if (IsEdge(Array.IndexOf(vertex, vertex[i].adjacent[j]), Array.IndexOf(vertex, vertex[i].adjacent[k])) == true)
+                                    PowerVrtx++;
+                            }
+                    }
+
+                if (PowerVrtx < 2)
+                    WeakVertices.Add(vertex[i]);
+            }
+
+            return WeakVertices;
         }
     }
 }
