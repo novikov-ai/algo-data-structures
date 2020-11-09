@@ -206,5 +206,109 @@ namespace AlgorithmsDataStructures2
             Assert.AreEqual("7 ", ResultString);
             ResultString = "";
         }
+
+        [TestMethod]
+        public void WeakVertices()
+        {
+            List<Vertex<int>> Weak = new List<Vertex<int>>();
+            string ResultString = "";
+
+            Weak = myGraph.WeakVertices();
+
+            // 7
+
+            if (Weak.Count > 0)
+            {
+                foreach (Vertex<int> item in Weak)
+                {
+                    ResultString += item.Value.ToString() + " ";
+                }
+            }
+
+            Assert.AreEqual("7 ", ResultString);
+            Assert.AreEqual(1, Weak.Count);
+            ResultString = "";
+
+            SimpleGraph<int> newGraph = new SimpleGraph<int>(myGraph.capacity);
+            newGraph = myGraph;
+            Assert.AreEqual(newGraph, myGraph);
+
+            newGraph.RemoveEdge(12, 13);
+            newGraph.RemoveEdge(12, 0);
+            newGraph.RemoveEdge(12, 7);
+
+            Weak = newGraph.WeakVertices();
+
+            // 7 14
+
+            if (Weak.Count > 0)
+            {
+                foreach (Vertex<int> item in Weak)
+                {
+                    ResultString += item.Value.ToString() + " ";
+                }
+            }
+
+            Assert.AreEqual("7 14 ", ResultString);
+            Assert.AreEqual(2, Weak.Count);
+            ResultString = "";
+
+            // 14
+
+            newGraph.AddEdge(5, 10);
+            //newGraph.AddEdge(5, 4);
+
+            Weak = newGraph.WeakVertices();
+
+            if (Weak.Count > 0)
+            {
+                foreach (Vertex<int> item in Weak)
+                {
+                    ResultString += item.Value.ToString() + " ";
+                }
+            }
+
+            Assert.AreEqual("14 ", ResultString);
+            Assert.AreEqual(1, Weak.Count);
+            ResultString = "";
+
+            // 8 10 12 14
+
+            newGraph.RemoveEdge(3, 7);
+            newGraph.RemoveEdge(11, 7);
+            newGraph.RemoveEdge(12, 7);
+
+            Weak = newGraph.WeakVertices();
+
+            if (Weak.Count > 0)
+            {
+                foreach (Vertex<int> item in Weak)
+                {
+                    ResultString += item.Value.ToString() + " ";
+                }
+            }
+
+            Assert.AreEqual("8 10 12 14 ", ResultString);
+            Assert.AreEqual(4, Weak.Count);
+            ResultString = "";
+
+            // 14
+
+            newGraph.AddEdge(11, 7);
+
+            Weak = newGraph.WeakVertices();
+
+            if (Weak.Count > 0)
+            {
+                foreach (Vertex<int> item in Weak)
+                {
+                    ResultString += item.Value.ToString() + " ";
+                }
+            }
+
+            Assert.AreEqual("14 ", ResultString);
+            Assert.AreEqual(1, Weak.Count);
+            ResultString = "";
+        }
     }
 }
