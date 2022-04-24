@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="AlgoPart1\Misc\**" />
+      <Compile Remove="AlgoPart1\Tests\**" />
+      <Compile Remove="AlgoPart2\Tests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="AlgoPart1\Misc\**" />
+      <EmbeddedResource Remove="AlgoPart1\Tests\**" />
+      <EmbeddedResource Remove="AlgoPart2\Tests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="AlgoPart1\Misc\**" />
+      <None Remove="AlgoPart1\Tests\**" />
+      <None Remove="AlgoPart2\Tests\**" />
+    </ItemGroup>
+
+</Project>

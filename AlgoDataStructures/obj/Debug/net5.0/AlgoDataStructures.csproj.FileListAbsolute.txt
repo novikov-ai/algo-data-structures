@@ -1,0 +1,15 @@
+/Users/aleksandr/Documents/Coding/Github/algorithms-data-structures/AlgoDataStructures/bin/Debug/net5.0/AlgoDataStructures.deps.json
+/Users/aleksandr/Documents/Coding/Github/algorithms-data-structures/AlgoDataStructures/bin/Debug/net5.0/AlgoDataStructures.runtimeconfig.json
+/Users/aleksandr/Documents/Coding/Github/algorithms-data-structures/AlgoDataStructures/bin/Debug/net5.0/AlgoDataStructures.runtimeconfig.dev.json
+/Users/aleksandr/Documents/Coding/Github/algorithms-data-structures/AlgoDataStructures/bin/Debug/net5.0/AlgoDataStructures.dll
+/Users/aleksandr/Documents/Coding/Github/algorithms-data-structures/AlgoDataStructures/bin/Debug/net5.0/ref/AlgoDataStructures.dll
+/Users/aleksandr/Documents/Coding/Github/algorithms-data-structures/AlgoDataStructures/bin/Debug/net5.0/AlgoDataStructures.pdb
+/Users/aleksandr/Documents/Coding/Github/algorithms-data-structures/AlgoDataStructures/obj/Debug/net5.0/AlgoDataStructures.csprojAssemblyReference.cache
+/Users/aleksandr/Documents/Coding/Github/algorithms-data-structures/AlgoDataStructures/obj/Debug/net5.0/AlgoDataStructures.GeneratedMSBuildEditorConfig.editorconfig
+/Users/aleksandr/Documents/Coding/Github/algorithms-data-structures/AlgoDataStructures/obj/Debug/net5.0/AlgoDataStructures.AssemblyInfoInputs.cache
+/Users/aleksandr/Documents/Coding/Github/algorithms-data-structures/AlgoDataStructures/obj/Debug/net5.0/AlgoDataStructures.AssemblyInfo.cs
+/Users/aleksandr/Documents/Coding/Github/algorithms-data-structures/AlgoDataStructures/obj/Debug/net5.0/AlgoDataStructures.csproj.CoreCompileInputs.cache
+/Users/aleksandr/Documents/Coding/Github/algorithms-data-structures/AlgoDataStructures/obj/Debug/net5.0/AlgoDataStructures.dll
+/Users/aleksandr/Documents/Coding/Github/algorithms-data-structures/AlgoDataStructures/obj/Debug/net5.0/ref/AlgoDataStructures.dll
+/Users/aleksandr/Documents/Coding/Github/algorithms-data-structures/AlgoDataStructures/obj/Debug/net5.0/AlgoDataStructures.pdb
+/Users/aleksandr/Documents/Coding/Github/algorithms-data-structures/AlgoDataStructures/obj/Debug/net5.0/AlgoDataStructures.genruntimeconfig.cache
